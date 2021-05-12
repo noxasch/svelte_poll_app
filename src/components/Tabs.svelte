@@ -1,12 +1,9 @@
 <script>
 import { createEventDispatcher } from 'svelte';
-// import { onMount } from "svelte";
+import { tabItems } from "../stores/tabStore"
 
 const dispatch = createEventDispatcher();
 
-export let tabItems = [
-  {name: 'tab name', isActive: true}
-];
 
 function onSelectTab(event) {
   const index = parseInt(event.target.dataset.id);
@@ -22,7 +19,7 @@ function onSelectTab(event) {
 
 <div class="tabs">
   <ul>
-    {#each tabItems as item, index}
+    {#each $tabItems as item, index}
       <li class:active="{item.isActive}" data-id="{index}" on:click={onSelectTab}>{item.name}</li>
     {/each}
   </ul>

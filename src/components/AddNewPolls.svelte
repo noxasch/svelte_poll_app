@@ -1,5 +1,6 @@
 <script>
   import { createEventDispatcher } from 'svelte';
+  import pollStore from "../stores/pollStore";
   import CustomButton from "./CustomButton.svelte";
   
   const dispatch = createEventDispatcher();
@@ -53,9 +54,10 @@
     isValid = validateForm();
     if (isValid) {
       const poll = { ...fields, votesA: 0, votesB: 0, id: mongoObjectId() };
-      dispatch('add', {
-        poll
+      pollStore.update((data) => {
+        return [...data, poll]
       });
+      dispatch('add');
     }
   }
 
