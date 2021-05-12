@@ -35,6 +35,7 @@
 
 <Card>
   <div class="poll">
+    <span class="delete-circle" on:click={onDelete(poll.id)} title="delete">&#10005;</span>
     <h3>{ poll.question }</h3>
     <p>Total votes: { totalVotes }</p>
     <div class="answer" on:click={upvote('a', poll.id)}>
@@ -44,9 +45,6 @@
     <div class="answer" on:click={upvote('b', poll.id)}>
       <div class="percent percent-b" style="width: {percentB}%"></div>
       <span>{ poll.answerB } ({ poll.votesB })</span>
-    </div>
-    <div class="delete">
-      <CustomButton flat={true} on:click={onDelete(poll.id)}>Delete</CustomButton>
     </div>
     
   </div>
@@ -93,5 +91,21 @@
   .delete {
     margin-top: 30px;
     text-align: center;
+  }
+  .poll {
+    position: relative;
+  }
+  .delete-circle {
+    display: block;
+    border-radius: 50%;
+    border: 1px solid #d91b42;
+    float: right;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    text-align: center;
+    cursor: pointer;
+    color: #fff;
+    background-color: #d91b42;
   }
 </style>
