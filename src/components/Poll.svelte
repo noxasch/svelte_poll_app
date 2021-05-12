@@ -1,15 +1,18 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { tweened } from "svelte/motion";
   import pollStore from "../stores/pollStore";
   import Card from "./Card.svelte";
-  import CustomButton from "./CustomButton.svelte";
-
-  const dispatch = createEventDispatcher();
 
   export let poll = {};
   $: totalVotes = poll.votesA + poll.votesB;
-  $: percentA = (poll.votesA / totalVotes).toFixed(2) * 100;
-  $: percentB = (poll.votesB / totalVotes).toFixed(2) * 100;
+  $: percentA = ((poll.votesA / totalVotes).toFixed(2) * 100) || 0; // in case of 0/0 = NaN
+  $: percentB = ((poll.votesB / totalVotes).toFixed(2) * 100) || 0;
+
+  const tweenA = tweened(0);
+  const tweenB = tweened(0);
+  $: tweenA.set(percentA);
+  $: tweenB.set(percentB);
+  // $: console.log(poll.question, percentA, percentB);
 
   function upvote(answer, pollId) {
     const updatedPoll = $pollStore.find((poll) => poll.id === pollId);
@@ -39,11 +42,11 @@
     <h3>{ poll.question }</h3>
     <p>Total votes: { totalVotes }</p>
     <div class="answer" on:click={upvote('a', poll.id)}>
-      <div class="percent percent-a" style="width: {percentA}%"></div>
+      <div class="percent percent-a" style="width: {$tweenA}%"></div>
       <span>{ poll.answerA } ({ poll.votesA })</span>
     </div>
     <div class="answer" on:click={upvote('b', poll.id)}>
-      <div class="percent percent-b" style="width: {percentB}%"></div>
+      <div class="percent percent-b" style="width: {$tweenB}%"></div>
       <span>{ poll.answerB } ({ poll.votesB })</span>
     </div>
     
