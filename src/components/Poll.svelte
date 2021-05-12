@@ -2,6 +2,7 @@
   import { createEventDispatcher } from "svelte";
   import pollStore from "../stores/pollStore";
   import Card from "./Card.svelte";
+  import CustomButton from "./CustomButton.svelte";
 
   const dispatch = createEventDispatcher();
 
@@ -21,6 +22,15 @@
       return updatedPolls;
     });
   }
+
+  function onDelete(pollId) {
+    pollStore.update((prevPolls) => {
+      const updatePolls = prevPolls;
+      const index = updatePolls.findIndex((poll) => poll.id === pollId);
+      updatePolls.splice(index,1);
+      return updatePolls;
+    })
+  }
 </script>
 
 <Card>
@@ -35,6 +45,10 @@
       <div class="percent percent-b" style="width: {percentB}%"></div>
       <span>{ poll.answerB } ({ poll.votesB })</span>
     </div>
+    <div class="delete">
+      <CustomButton flat={true} on:click={onDelete(poll.id)}>Delete</CustomButton>
+    </div>
+    
   </div>
 </Card>
 
@@ -75,5 +89,9 @@
   .percent-b { 
     border-left: 4px solid #45c469;
     background-color: rgba(69, 196, 160, 0.2);
+  }
+  .delete {
+    margin-top: 30px;
+    text-align: center;
   }
 </style>
