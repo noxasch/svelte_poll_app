@@ -1,8 +1,8 @@
 <script>
-	import { tabItems } from "./stores/tabStore"
-	import Header from "./layouts/Header.svelte";
-	import Footer from "./layouts/Footer.svelte";
-	import Tabs from "./components/Tabs.svelte";
+	import { tabItems } from "$src/stores/tabStore"
+	import Header from "$src/layouts/Header.svelte";
+	import Footer from "$src/layouts/Footer.svelte";
+	import Tabs from "$src/components/Tabs.svelte";
 
 
 

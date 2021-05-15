@@ -1,7 +1,7 @@
 <script>
   import { createEventDispatcher } from 'svelte';
-  import pollStore from "../stores/pollStore";
-  import CustomButton from "./CustomButton.svelte";
+  import pollStore from "$src/stores/pollStore";
+  import CustomButton from "$src/components/CustomButton.svelte";
   
   const dispatch = createEventDispatcher();
 
